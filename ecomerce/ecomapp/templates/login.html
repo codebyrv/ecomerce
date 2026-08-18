@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MyStore</title>
+    <title>Login - RvStore</title>
 
     <style>
         * {
@@ -125,8 +125,8 @@
     <div class="logo">RvStore</div>
 
     <nav>
-        <a href="/">Home</a>
-        <a href="/register/">Register</a>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'register'   %}">Register</a>
     </nav>
 </header>
 
