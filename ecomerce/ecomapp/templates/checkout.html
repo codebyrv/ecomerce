@@ -1,0 +1,322 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Checkout - RvStore</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 8%;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h2 {
+            color: #222;
+        }
+
+        /* Main container */
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .checkout-title {
+            margin-bottom: 25px;
+        }
+
+        .checkout-title h1 {
+            font-size: 28px;
+        }
+
+        /* Checkout layout */
+        .checkout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        /* Box */
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .box h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        /* Cart item */
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-details {
+            color: #777;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-weight: bold;
+        }
+
+        /* Total */
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Address form */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .form-group textarea {
+            height: 90px;
+            resize: none;
+        }
+
+        /* Place order button */
+        .order-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .order-btn:hover {
+            background: #444;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .checkout {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- Header -->
+    <div class="header">
+
+        <h2>RvStore</h2>
+
+    </div>
+
+
+    <!-- Main content -->
+    <div class="container">
+
+
+        <!-- Page title -->
+        <div class="checkout-title">
+
+            <h1>Checkout</h1>
+
+        </div>
+
+
+        <div class="checkout">
+
+
+            <!-- LEFT SIDE -->
+            <div class="box">
+
+                <h2>Delivery Details</h2>
+
+
+                <div class="form-group">
+
+                    <label>Full Name</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Phone Number</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your phone number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Address</label>
+
+                    <textarea
+                        placeholder="Enter your delivery address"
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>City</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your city"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>PIN Code</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter PIN code"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+            <div class="box">
+
+                <h2>Order Summary</h2>
+
+
+                <!-- Loop through cart items -->
+                {% for item in cart_items %}
+
+                    <div class="item">
+
+                        <div>
+
+                            <!-- Product name -->
+                            <div class="item-name">
+                                {{ item.product.product_name }}
+                            </div>
+
+                            <!-- Quantity -->
+                            <div class="item-details">
+                                Qty: {{ item.quantity }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- Product total -->
+                        <div class="item-price">
+
+                            ₹{{ item.item_total }}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+
+                <!-- Final total -->
+                <div class="total">
+
+                    <span>Total</span>
+
+                    <span>₹{{ total }}</span>
+
+                </div>
+
+
+                <!-- Place order -->
+                <button class="order-btn">
+
+                    Place Order
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+```

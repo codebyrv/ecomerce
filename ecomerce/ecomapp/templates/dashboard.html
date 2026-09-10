@@ -189,20 +189,7 @@
 <body>
 
     <!-- Header -->
-    <header>
-        <h3>RV Store</h3>
-        <div class="logo"></div>
-
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="{% url 'login'  %}">Login</a>
-            <a href="{% url 'register'  %}">Register</a>
-
-        </nav>
-    </header>
+   
       {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -225,6 +212,8 @@
 
 
     <!-- Cards -->
+
+    {% for product in products   %}
     <section class="section">
 
         <h2>Featured Products</h2>
@@ -232,65 +221,36 @@
         <div class="cards">
 
             <div class="card">
-
+                  
                 <div class="card-image">
-                    Product Image
+                    {% if product.image %}
+                 <img src="{{product.image.url}}" width="200">
+                  {% endif %}
                 </div>
+                   
+
+              
 
                 <div class="card-content">
-                    <h3>Product One</h3>
+                    <h3>{{product.product_name}}</h3>
 
                     <p>
-                        A simple description of the product goes here.
+                        {{product.DESCRIPTION}}
                     </p>
-
-                    <a href="#">View Product</a>
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-image">
-                    Product Image
-                </div>
-
-                <div class="card-content">
-                    <h3>Product Two</h3>
 
                     <p>
-                        A simple description of the product goes here.
+                        {{product.price}}
                     </p>
 
-                    <a href="#">View Product</a>
+                    <a href="{% url 'product_detail' product.id %}">View Product</a>
                 </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-image">
-                    Product Image
-                </div>
-
-                <div class="card-content">
-                    <h3>Product Three</h3>
-
-                    <p>
-                        A simple description of the product goes here.
-                    </p>
-
-                    <a href="#">View Product</a>
-                </div>
-
+   
             </div>
 
         </div>
 
     </section>
-
+     {% endfor %}
 
     <!-- Footer -->
     <footer>

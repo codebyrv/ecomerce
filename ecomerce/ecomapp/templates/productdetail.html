@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ product.product_name }} | RV Store</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        header {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #000;
+        }
+
+        /* PRODUCT */
+
+        .product-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 35px;
+
+            background: white;
+            border-radius: 10px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        /* IMAGE */
+
+        .product-image {
+            height: 450px;
+            background: #f1f1f1;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 8px;
+        }
+
+        .product-image img {
+            max-width: 90%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .no-image {
+            color: #888;
+        }
+
+        /* PRODUCT DETAILS */
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h1 {
+            font-size: 36px;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 25px;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* ADD TO CART */
+
+        .cart-btn {
+            display: inline-block;
+
+            background: #333;
+            color: white;
+
+            padding: 14px 30px;
+
+            text-decoration: none;
+
+            border-radius: 5px;
+
+            font-size: 16px;
+        }
+
+        .cart-btn:hover {
+            background: #555;
+        }
+
+        /* BACK BUTTON */
+
+        .back-btn {
+            display: inline-block;
+
+            margin-top: 25px;
+
+            text-decoration: none;
+
+            color: #555;
+        }
+
+        .back-btn:hover {
+            color: #000;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #222;
+            color: white;
+
+            text-align: center;
+
+            padding: 30px;
+
+            margin-top: 30px;
+        }
+
+        footer p {
+            color: #aaa;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+                margin: 30px 15px;
+                padding: 20px;
+            }
+
+            .product-image {
+                height: 300px;
+            }
+
+            .product-info h1 {
+                font-size: 28px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            RV Store
+        </div>
+
+        <nav>
+
+            <a href="{% url 'dashboard' %}">
+                Home
+            </a>
+
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- PRODUCT DETAIL -->
+
+    <div class="product-container">
+
+        <!-- PRODUCT IMAGE -->
+
+        <div class="product-image">
+
+            {% if product.image %}
+
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.product_name }}"
+                >
+
+            {% else %}
+
+                <p class="no-image">
+                    No Image Available
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PRODUCT INFORMATION -->
+
+        <div class="product-info">
+
+            <h1>
+                {{ product.product_name }}
+            </h1>
+
+
+            <div class="price">
+
+                ₹{{ product.price }}
+
+            </div>
+
+            <div class="price">
+
+                ₹{{ product.stock }} in stock
+
+            </div>
+
+            <p class="description">
+
+                {{ product.DESCRIPTION }}
+
+            </p>
+
+
+            <!-- ADD TO CART -->
+
+            <a href="{% url 'add_to_cart' product.id %}" class="cart-btn">
+    🛒 Add to Cart
+</a>
+
+            <br>
+
+
+            <!-- BACK -->
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="back-btn"
+            >
+
+                ← Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h3>
+            RV Store
+        </h3>
+
+        <p>
+            © 2026 RV Store. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+</html>
+
+
