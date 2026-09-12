@@ -71,3 +71,21 @@ class Orderitem(models.Model):
     
     def __str__(self):
         return f"{self.product.product_name}-{self.quantity}"
+    
+    
+    
+    
+class OrderTracking(models.Model):
+    
+    
+    order=models.ForeignKey(Order,on_delete=models.CASCADE,related_name="tracking")
+    
+    place=models.CharField(max_length=100)
+    
+    status=models.CharField(max_length=100)
+    
+    tracking_time=models.DateField(auto_now_add=True)
+    
+    
+    def __str__(self):
+        return f"order #{self.order.id}-{self.status}"    
