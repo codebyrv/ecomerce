@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>RvStore</title>
 
+
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
 
         body {
             font-family: Arial, sans-serif;
@@ -19,15 +26,23 @@
             color: #333;
         }
 
-        /* Header */
+
+        /* =========================
+           HEADER / NAVBAR
+        ========================= */
+
         header {
             background: #ffffff;
             border-bottom: 1px solid #ddd;
             padding: 18px 7%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
+
+        /* Store name */
 
         .logo {
             font-size: 24px;
@@ -35,23 +50,56 @@
             color: #222;
         }
 
+
+        /* Navigation */
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+
         nav a {
             text-decoration: none;
             color: #555;
-            margin-left: 25px;
             font-size: 15px;
         }
+
 
         nav a:hover {
             color: #000;
         }
 
-        /* Hero */
+
+        /* Logout button */
+
+        .logout-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+
+        .logout-btn:hover {
+            background: #555;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
             background: #e9e9e9;
             padding: 70px 7%;
             text-align: center;
         }
+
 
         .hero h1 {
             font-size: 40px;
@@ -59,11 +107,13 @@
             color: #222;
         }
 
+
         .hero p {
             color: #666;
             font-size: 17px;
             margin-bottom: 25px;
         }
+
 
         .hero button {
             padding: 12px 25px;
@@ -74,14 +124,20 @@
             cursor: pointer;
         }
 
+
         .hero button:hover {
             background: #555;
         }
 
-        /* Cards Section */
+
+        /* =========================
+           PRODUCTS SECTION
+        ========================= */
+
         .section {
             padding: 50px 7%;
         }
+
 
         .section h2 {
             text-align: center;
@@ -89,11 +145,15 @@
             color: #222;
         }
 
+
         .cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
         }
+
+
+        /* Product card */
 
         .card {
             background: white;
@@ -102,29 +162,56 @@
             overflow: hidden;
         }
 
+
+        /* Product image */
+
         .card-image {
-            height: 180px;
+            height: 220px;
             background: #ddd;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #777;
         }
+
+
+        .card-image img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+
+        /* Product information */
 
         .card-content {
             padding: 20px;
         }
+
 
         .card h3 {
             margin-bottom: 10px;
             color: #222;
         }
 
+
         .card p {
             color: #666;
             line-height: 1.5;
             margin-bottom: 15px;
         }
+
+
+        /* Price */
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+
+
+        /* View product */
 
         .card a {
             display: inline-block;
@@ -136,7 +223,48 @@
             font-size: 14px;
         }
 
-        /* Footer */
+
+        .card a:hover {
+            background: #555;
+        }
+
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .alert {
+            padding: 12px 7%;
+            text-align: center;
+        }
+
+
+        .alert-warning,
+        .alert-info {
+            background-color: #fff3cd;
+            color: #856404;
+            border-bottom: 1px solid #ffeeba;
+        }
+
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-bottom: 1px solid #c3e6cb;
+        }
+
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-bottom: 1px solid #f5c6cb;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
         footer {
             background: #222;
             color: white;
@@ -145,25 +273,22 @@
             margin-top: 30px;
         }
 
+
+        footer h3 {
+            margin-bottom: 8px;
+        }
+
+
         footer p {
             color: #aaa;
-            margin-top: 8px;
             font-size: 14px;
         }
 
-           .alert-warning, .alert-info {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
 
+        /* =========================
+           MOBILE
+        ========================= */
 
-        /* Mobile */
         @media (max-width: 768px) {
 
             header {
@@ -171,98 +296,264 @@
                 gap: 15px;
             }
 
-            nav a {
-                margin: 0 8px;
+
+            nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
+
 
             .cards {
                 grid-template-columns: 1fr;
             }
 
+
             .hero h1 {
                 font-size: 32px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- Header -->
-   
-      {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <header>
 
 
-    <!-- Hero -->
+        <!-- Store name -->
+
+        <div class="logo">
+
+            RvStore
+
+        </div>
+
+
+        <!-- Navigation links -->
+
+        <nav>
+
+
+            <!-- Cart -->
+
+            <a href="{% url 'cart' %}">
+                Cart
+            </a>
+
+
+            <!-- My Orders -->
+
+            <a href="{% url 'my_orders' %}">
+                My Orders
+            </a>
+
+
+            <!-- Logout -->
+
+            <form method="POST"
+                  action="{% url 'logout' %}"
+                  style="display: inline;">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="logout-btn"
+                >
+                    Logout
+                </button>
+
+            </form>
+
+
+        </nav>
+
+
+    </header>
+
+
+
+    <!-- =========================
+         DJANGO MESSAGES
+    ========================= -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert alert-{{ message.tags }}">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
     <section class="hero">
-        <h1>Welcome to MyStore</h1>
+
+        <h1>
+            Welcome to RvStore
+        </h1>
+
 
         <p>
             Find quality products at simple and affordable prices.
         </p>
 
-        <button>Shop Now</button>
+
+        <button>
+            Shop Now
+        </button>
+
     </section>
 
 
-    <!-- Cards -->
 
-    {% for product in products   %}
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
+
     <section class="section">
 
-        <h2>Featured Products</h2>
+
+        <h2>
+            Featured Products
+        </h2>
+
 
         <div class="cards">
 
-            <div class="card">
-                  
-                <div class="card-image">
-                    {% if product.image %}
-                 <img src="{{product.image.url}}" width="200">
-                  {% endif %}
+
+            {% for product in products %}
+
+
+                <div class="card">
+
+
+                    <!-- Product image -->
+
+                    <div class="card-image">
+
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ product.image.url }}"
+                                alt="{{ product.product_name }}"
+                            >
+
+                        {% else %}
+
+                            No Image
+
+                        {% endif %}
+
+
+                    </div>
+
+
+
+                    <!-- Product details -->
+
+                    <div class="card-content">
+
+
+                        <h3>
+
+                            {{ product.product_name }}
+
+                        </h3>
+
+
+                        <!-- Product description -->
+
+                        <p>
+
+                            {{ product.description }}
+
+                        </p>
+
+
+                        <!-- Product price -->
+
+                        <p class="price">
+
+                            ₹{{ product.price }}
+
+                        </p>
+
+
+                        <!-- Product detail page -->
+
+                        <a href="{% url 'product_detail' product.id %}">
+
+                            View Product
+
+                        </a>
+
+
+                    </div>
+
+
                 </div>
-                   
 
-              
 
-                <div class="card-content">
-                    <h3>{{product.product_name}}</h3>
+            {% empty %}
 
-                    <p>
-                        {{product.DESCRIPTION}}
-                    </p>
 
-                    <p>
-                        {{product.price}}
-                    </p>
+                <p>
+                    No products available.
+                </p>
 
-                    <a href="{% url 'product_detail' product.id %}">View Product</a>
-                </div>
-   
-            </div>
+
+            {% endfor %}
+
 
         </div>
 
-    </section>
-     {% endfor %}
 
-    <!-- Footer -->
+    </section>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
     <footer>
 
-       
+
+        <h3>
+            RvStore
+        </h3>
+
 
         <p>
-        <h3>RV Store</h3>
-            © 2026  . All rights reserved.
+            © 2026 RvStore. All rights reserved.
         </p>
+
 
     </footer>
 
+
 </body>
+
 </html>

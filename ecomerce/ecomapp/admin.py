@@ -1,31 +1,40 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
+
+from .models import (
+    Order,
+    Category,
+    Product,
+    Orderitem,
+    OrderTracking
+)
 
 
-from .models import*
-# Register your models here.
+@admin.register(Category)
+class CategoryAdmin(ModelAdmin):
+
+    list_display = (
+        "id",
+        "name",
+        "is_active",
+    )
 
 
-admin.site.register(Category)
-admin.site.register(Product)
+@admin.register(Product)
+class ProductAdmin(ModelAdmin):
 
+    list_display = (
+        "id",
+        "product_name",
+        "category",
+        "price",
+        "stock",
+    )
 
-# admin.py
-
-from django.contrib import admin
-
-from .models import Order
-from .models import Orderitem
-from .models import OrderTracking
-
-
-# =========================================================
-# ORDER ADMIN
-# =========================================================
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(ModelAdmin):
 
-    # Columns shown in admin
     list_display = (
         "id",
         "user",
@@ -36,21 +45,15 @@ class OrderAdmin(admin.ModelAdmin):
         "created_at",
     )
 
-    # Filters on right side
     list_filter = (
         "status",
         "payment_status",
     )
 
 
-# =========================================================
-# ORDER ITEM ADMIN
-# =========================================================
-
 @admin.register(Orderitem)
-class OrderItemAdmin(admin.ModelAdmin):
+class OrderItemAdmin(ModelAdmin):
 
-    # Display purchased products
     list_display = (
         "order",
         "product",
@@ -59,14 +62,9 @@ class OrderItemAdmin(admin.ModelAdmin):
     )
 
 
-# =========================================================
-# ORDER TRACKING ADMIN
-# =========================================================
-
 @admin.register(OrderTracking)
-class OrderTrackingAdmin(admin.ModelAdmin):
+class OrderTrackingAdmin(ModelAdmin):
 
-    # Display tracking information
     list_display = (
         "order",
         "place",
@@ -74,7 +72,6 @@ class OrderTrackingAdmin(admin.ModelAdmin):
         "tracking_time",
     )
 
-    # Filter by status
     list_filter = (
         "status",
     )

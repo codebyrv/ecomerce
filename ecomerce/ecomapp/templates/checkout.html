@@ -35,6 +35,7 @@
             background: #ffffff;
             border-bottom: 1px solid #ddd;
             padding: 18px 7%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -134,8 +135,10 @@
         .form-group textarea {
             width: 100%;
             padding: 12px;
+
             border: 1px solid #ccc;
             border-radius: 6px;
+
             font-size: 15px;
             outline: none;
         }
@@ -168,7 +171,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             padding: 15px 0;
+
             border-bottom: 1px solid #eee;
         }
 
@@ -197,8 +202,10 @@
         .total-row {
             display: flex;
             justify-content: space-between;
+
             margin-top: 20px;
             padding-top: 18px;
+
             border-top: 2px solid #eee;
         }
 
@@ -216,25 +223,140 @@
 
 
         /* =========================
-           BUTTON
+           PLACE ORDER BUTTON
         ========================= */
 
         .place-order-btn {
             width: 100%;
+
             margin-top: 25px;
             padding: 14px;
+
             border: none;
             border-radius: 7px;
+
             background: #111;
             color: white;
+
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
         }
 
 
         .place-order-btn:hover {
             background: #333;
+        }
+
+
+        /* =========================
+           PROCESSING BUTTON
+        ========================= */
+
+        .place-order-btn.processing {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+
+        /* Loading spinner */
+
+        .spinner {
+            display: inline-block;
+
+            width: 18px;
+            height: 18px;
+
+            border: 3px solid #ffffff;
+            border-top: 3px solid transparent;
+
+            border-radius: 50%;
+
+            vertical-align: middle;
+
+            margin-right: 8px;
+
+            animation: spin 0.8s linear infinite;
+        }
+
+
+        /* Spinner animation */
+
+        @keyframes spin {
+
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* =========================
+           PROCESSING OVERLAY
+        ========================= */
+
+        .processing-overlay {
+
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(255, 255, 255, 0.92);
+
+            z-index: 9999;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-direction: column;
+        }
+
+
+        .processing-overlay.show {
+            display: flex;
+        }
+
+
+        .big-spinner {
+
+            width: 55px;
+            height: 55px;
+
+            border: 5px solid #ddd;
+            border-top: 5px solid #111;
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+
+            margin-bottom: 20px;
+        }
+
+
+        .processing-text {
+
+            font-size: 20px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+        }
+
+
+        .processing-subtext {
+
+            color: #777;
+            font-size: 14px;
         }
 
 
@@ -250,8 +372,11 @@
         .message {
             background: #ffe5e5;
             color: #b00020;
+
             padding: 12px 15px;
+
             border-radius: 6px;
+
             margin-bottom: 8px;
         }
 
@@ -308,6 +433,7 @@
                 Cart
             </a>
 
+
             <a href="{% url 'my_orders' %}">
                 My Orders
             </a>
@@ -315,6 +441,35 @@
         </div>
 
     </nav>
+
+
+
+    <!-- =========================
+         PROCESSING OVERLAY
+    ========================= -->
+
+    <div
+        class="processing-overlay"
+        id="processingOverlay"
+    >
+
+        <div class="big-spinner"></div>
+
+
+        <div class="processing-text">
+
+            Processing your order...
+
+        </div>
+
+
+        <div class="processing-subtext">
+
+            Please don't refresh or close this page.
+
+        </div>
+
+    </div>
 
 
 
@@ -331,6 +486,7 @@
                 Checkout
             </h1>
 
+
             <p>
                 Enter your delivery details and place your order.
             </p>
@@ -339,7 +495,9 @@
 
 
 
-        <!-- Django messages -->
+        <!-- =========================
+             DJANGO MESSAGES
+        ========================= -->
 
         {% if messages %}
 
@@ -364,9 +522,9 @@
         <div class="checkout-grid">
 
 
-            <!-- =====================
+            <!-- =========================
                  CUSTOMER DETAILS
-            ====================== -->
+            ========================= -->
 
             <div class="card">
 
@@ -375,7 +533,10 @@
                 </h2>
 
 
-                <form method="POST">
+                <form
+                    method="POST"
+                    id="checkoutForm"
+                >
 
                     {% csrf_token %}
 
@@ -385,6 +546,7 @@
                         <label>
                             Full Name
                         </label>
+
 
                         <input
                             type="text"
@@ -403,6 +565,7 @@
                             Email
                         </label>
 
+
                         <input
                             type="email"
                             name="email"
@@ -420,6 +583,7 @@
                             Phone Number
                         </label>
 
+
                         <input
                             type="text"
                             name="phone"
@@ -436,6 +600,7 @@
                         <label>
                             Address
                         </label>
+
 
                         <textarea
                             name="address"
@@ -456,6 +621,7 @@
                                 City
                             </label>
 
+
                             <input
                                 type="text"
                                 name="city"
@@ -471,6 +637,7 @@
                             <label>
                                 State
                             </label>
+
 
                             <input
                                 type="text"
@@ -490,6 +657,7 @@
                             Pincode
                         </label>
 
+
                         <input
                             type="text"
                             name="pincode"
@@ -504,9 +672,9 @@
 
 
 
-            <!-- =====================
+            <!-- =========================
                  ORDER SUMMARY
-            ====================== -->
+            ========================= -->
 
             <div class="card">
 
@@ -515,7 +683,9 @@
                 </h2>
 
 
+
                 {% for item in cart_items %}
+
 
                     <div class="order-item">
 
@@ -548,6 +718,7 @@
 
                     </div>
 
+
                 {% endfor %}
 
 
@@ -569,9 +740,14 @@
 
 
 
+                <!-- =========================
+                     PLACE ORDER
+                ========================= -->
+
                 <button
                     type="submit"
                     class="place-order-btn"
+                    id="placeOrderBtn"
                 >
 
                     Pay & Place Order
@@ -587,6 +763,67 @@
         </div>
 
     </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        // Get checkout form
+        const checkoutForm =
+            document.getElementById("checkoutForm");
+
+
+        // Get place order button
+        const placeOrderBtn =
+            document.getElementById("placeOrderBtn");
+
+
+        // Get processing overlay
+        const processingOverlay =
+            document.getElementById("processingOverlay");
+
+
+        // When user submits the form
+        checkoutForm.addEventListener("submit", function(event) {
+
+
+            // Let browser perform normal HTML validation
+            if (!checkoutForm.checkValidity()) {
+
+                return;
+
+            }
+
+
+            // Change button to processing state
+            placeOrderBtn.classList.add("processing");
+
+
+            // Show spinner inside button
+            placeOrderBtn.innerHTML =
+
+                '<span class="spinner"></span>' +
+                'Processing...';
+
+
+            // Disable button
+            placeOrderBtn.disabled = true;
+
+
+            // Show full-screen processing animation
+            processingOverlay.classList.add("show");
+
+
+            // Form continues submitting normally
+            // Django CheckoutView will process the order
+
+        });
+
+    </script>
 
 
 </body>

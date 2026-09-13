@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>RvStore</title>
 
+
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
 
         body {
             font-family: Arial, sans-serif;
@@ -19,271 +26,560 @@
             color: #333;
         }
 
-        /* Header */
+
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
+
             background: #ffffff;
+
             border-bottom: 1px solid #ddd;
+
             padding: 18px 7%;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
+
         .logo {
+
             font-size: 24px;
+
             font-weight: bold;
+
             color: #222;
         }
 
+
         nav a {
+
             text-decoration: none;
+
             color: #555;
+
             margin-left: 25px;
+
             font-size: 15px;
         }
 
+
         nav a:hover {
+
             color: #000;
         }
 
-        /* Hero */
+
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
+
             background: #e9e9e9;
+
             padding: 70px 7%;
+
             text-align: center;
         }
 
+
         .hero h1 {
+
             font-size: 40px;
+
             margin-bottom: 15px;
+
             color: #222;
         }
 
+
         .hero p {
+
             color: #666;
+
             font-size: 17px;
+
             margin-bottom: 25px;
         }
 
-        .hero button {
+
+        .shop-btn {
+
+            display: inline-block;
+
             padding: 12px 25px;
-            border: none;
+
             background: #333;
+
             color: white;
+
+            text-decoration: none;
+
             border-radius: 5px;
-            cursor: pointer;
         }
 
-        .hero button:hover {
+
+        .shop-btn:hover {
+
             background: #555;
         }
 
-        /* Cards Section */
+
+        /* =========================
+           PRODUCTS SECTION
+        ========================= */
+
         .section {
+
             padding: 50px 7%;
         }
 
+
         .section h2 {
+
             text-align: center;
+
             margin-bottom: 30px;
+
             color: #222;
         }
 
+
         .cards {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 25px;
         }
 
+
+        /* =========================
+           PRODUCT CARD
+        ========================= */
+
         .card {
+
             background: white;
+
             border: 1px solid #ddd;
+
             border-radius: 8px;
+
+            overflow: hidden;
+
+            transition: 0.2s;
+        }
+
+
+        .card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 5px 15px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =========================
+           PRODUCT IMAGE
+        ========================= */
+
+        .card-image {
+
+            height: 220px;
+
+            background: #eee;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
             overflow: hidden;
         }
 
-        .card-image {
-            height: 180px;
-            background: #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #777;
+
+        .card-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
         }
 
+
+        /* =========================
+           PRODUCT CONTENT
+        ========================= */
+
         .card-content {
+
             padding: 20px;
         }
 
+
         .card h3 {
+
             margin-bottom: 10px;
+
             color: #222;
         }
 
+
         .card p {
+
             color: #666;
+
             line-height: 1.5;
+
+            margin-bottom: 12px;
+        }
+
+
+        .price {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #222;
+
             margin-bottom: 15px;
         }
 
-        .card a {
+
+        .stock {
+
+            font-size: 14px;
+
+            color: #666;
+
+            margin-bottom: 15px;
+        }
+
+
+        .view-btn {
+
             display: inline-block;
+
             text-decoration: none;
+
             background: #333;
+
             color: white;
+
             padding: 9px 16px;
+
             border-radius: 4px;
+
             font-size: 14px;
         }
 
-        /* Footer */
-        footer {
-            background: #222;
-            color: white;
+
+        .view-btn:hover {
+
+            background: #555;
+        }
+
+
+        /* =========================
+           NO PRODUCTS
+        ========================= */
+
+        .no-products {
+
             text-align: center;
+
+            color: #777;
+
+            padding: 40px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            background: #222;
+
+            color: white;
+
+            text-align: center;
+
             padding: 30px;
+
             margin-top: 30px;
         }
 
+
         footer p {
+
             color: #aaa;
+
             margin-top: 8px;
+
             font-size: 14px;
         }
 
-        /* Mobile */
+
+        /* =========================
+           MOBILE
+        ========================= */
+
         @media (max-width: 768px) {
 
             header {
+
                 flex-direction: column;
+
                 gap: 15px;
             }
 
+
             nav a {
+
                 margin: 0 8px;
             }
 
+
             .cards {
+
                 grid-template-columns: 1fr;
             }
 
+
             .hero h1 {
+
                 font-size: 32px;
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- Header -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
     <header>
-        <h3>RV Store</h3>
-        <div class="logo"></div>
+
+        <div class="logo">
+
+            RvStore
+
+        </div>
+
 
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Products</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="{% url 'login'  %}">Login</a>
-            <a href="{% url 'register'  %}">Register</a>
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}">
+                Register
+            </a>
 
         </nav>
+
     </header>
 
 
-    <!-- Hero -->
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
     <section class="hero">
-        <h1>Welcome to MyStore</h1>
+
+        <h1>
+            Welcome to RvStore
+        </h1>
+
 
         <p>
             Find quality products at simple and affordable prices.
         </p>
 
-        <button>Shop Now</button>
+
+        <a href="#products"
+           class="shop-btn">
+
+            Shop Now
+
+        </a>
+
     </section>
 
 
-    <!-- Cards -->
-    <section class="section">
 
-        <h2>Featured Products</h2>
+    <!-- =========================
+         PRODUCTS
+         Products come from database
+    ========================= -->
+
+    <section class="section"
+             id="products">
+
+
+        <h2>
+            Products
+        </h2>
+
 
         <div class="cards">
 
-            <div class="card">
 
-                <div class="card-image">
-                    Product Image
-                </div>
+            {% if products %}
 
-                <div class="card-content">
-                    <h3>Product One</h3>
+
+                {% for product in products %}
+
+
+                    <div class="card">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="card-image">
+
+                            {% if product.image %}
+
+                                <img
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.product_name }}"
+                                >
+
+                            {% else %}
+
+                                No Image
+
+                            {% endif %}
+
+                        </div>
+
+
+
+                        <!-- PRODUCT DETAILS -->
+
+                        <div class="card-content">
+
+
+                            <h3>
+
+                                {{ product.product_name }}
+
+                            </h3>
+
+
+                            <p>
+
+                                {{ product.description }}
+
+                            </p>
+
+
+                            <div class="price">
+
+                                ₹{{ product.price }}
+
+                            </div>
+
+
+                            <div class="stock">
+
+                                {% if product.stock > 0 %}
+
+                                    {{ product.stock }} items available
+
+                                {% else %}
+
+                                    Out of stock
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'product_detail' product.id %}"
+                                class="view-btn"
+                            >
+
+                                View Product
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <div class="no-products">
 
                     <p>
-                        A simple description of the product goes here.
+                        No products available.
                     </p>
 
-                    <a href="#">View Product</a>
                 </div>
 
-            </div>
 
+            {% endif %}
 
-            <div class="card">
-
-                <div class="card-image">
-                    Product Image
-                </div>
-
-                <div class="card-content">
-                    <h3>Product Two</h3>
-
-                    <p>
-                        A simple description of the product goes here.
-                    </p>
-
-                    <a href="#">View Product</a>
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-image">
-                    Product Image
-                </div>
-
-                <div class="card-content">
-                    <h3>Product Three</h3>
-
-                    <p>
-                        A simple description of the product goes here.
-                    </p>
-
-                    <a href="#">View Product</a>
-                </div>
-
-            </div>
 
         </div>
+
 
     </section>
 
 
-    <!-- Footer -->
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
     <footer>
 
-       
+        <h3>
+            RvStore
+        </h3>
+
 
         <p>
-        <h3>RV Store</h3>
-            © 2026  . All rights reserved.
+            © 2026 RvStore. All rights reserved.
         </p>
 
     </footer>
 
+
 </body>
+
 </html>

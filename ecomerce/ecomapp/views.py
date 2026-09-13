@@ -8,9 +8,20 @@ from ecomapp.models import*
 
 
 class IndexView(View):
-    def get(self, request):
-        return render(request, 'index.html') 
 
+    def get(self, request):
+
+        products = Product.objects.filter(
+            category__is_active=True
+        )
+
+        return render(
+            request,
+            "index.html",
+            {
+                "products": products
+            }
+        )
 
 class RegisterView(View):
     def get(self, request):
@@ -143,10 +154,12 @@ class AddToCartView(LoginRequiredMixin,View):
                 
                 cart[product_id]+=1
         else:
-            cart[product_id]=1
-            if cart[product_id]>product.stock:
-                
-                cart[product_id]= 1
+         
+            if product.stock > 0:
+                cart[product_id_str] = 1
+            else:
+                messages.error(request, "Product is out of stock.")
+                return redirect("product_detail", product_id=product.id)
                 
         request.session['cart']=cart
         
@@ -552,35 +565,87 @@ class MyOrdersView(LoginRequiredMixin, View):
         )
 
 
-# =========================================================
-# TRACK ORDER VIEW
-# =========================================================
+# # =========================================================
+# # TRACK ORDER VIEW
+# # =========================================================
+
+# class TrackOrderView(LoginRequiredMixin, View):
+
+#     def get(self, request, order_id):
+
+#         # Get only current user's order
+#         order = get_object_or_404(
+#             Order,
+#             id=order_id,
+#             user=request.user
+#         )
+
+
+#         # Get tracking history
+#         tracking = order.tracking.all().order_by(
+#             "tracking_time"
+#         )
+
+
+#         # Show tracking page
+#         return render(
+#             request,
+#             "track_order.html",
+#             {
+#                 "order": order,
+
+#                 "tracking": tracking
+#             }
+#         )
+
+
+
+
+# class TrackOrderView(LoginRequiredMixin, View):
+
+#     def get(self, request, order_id):
+
+#         order = get_object_or_404(
+#             Order,
+#             id=order_id,
+#             user=request.user
+#         )
+
+#         tracking = OrderTracking.objects.filter(
+#             order=order
+#         ).order_by(
+#             "tracking_time"
+#         )
+
+#         return render(
+#             request,
+#             "track_order.html",
+#             {
+#                 "order": order,
+#                 "tracking": tracking
+#             }
+#         )
+
 
 class TrackOrderView(LoginRequiredMixin, View):
 
     def get(self, request, order_id):
 
-        # Get only current user's order
+        # Get this user's order from the database
         order = get_object_or_404(
             Order,
             id=order_id,
             user=request.user
         )
 
+        # Get tracking history from database
+        tracking = order.tracking.all().order_by("tracking_time")
 
-        # Get tracking history
-        tracking = order.tracking.all().order_by(
-            "tracking_time"
-        )
-
-
-        # Show tracking page
         return render(
             request,
             "track_order.html",
             {
                 "order": order,
-
                 "tracking": tracking
             }
         )

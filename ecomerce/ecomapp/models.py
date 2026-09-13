@@ -40,6 +40,8 @@ class Order(models.Model):
     
     city=models.CharField( max_length=100)
     
+    address=models.CharField( max_length=100)
+    
     state=models.CharField(max_length=100)
     
     pincode=models.CharField(max_length=100)
@@ -61,31 +63,52 @@ class Order(models.Model):
       
       
 class Orderitem(models.Model):
-    
-    
-    order=models.ForeignKey(Order,on_delete=models.CASCADE)
-    
-    quantity=models.PositiveIntegerField()
-    
-    price=models.PositiveIntegerField()
-    
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="items"
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE
+    )
+
+    quantity = models.PositiveIntegerField()
+
+    price = models.PositiveIntegerField()
+
     def __str__(self):
-        return f"{self.product.product_name}-{self.quantity}"
-    
-    
-    
+        return f"{self.product.product_name} - {self.quantity}"
     
 class OrderTracking(models.Model):
-    
-    
-    order=models.ForeignKey(Order,on_delete=models.CASCADE,related_name="tracking")
-    
-    place=models.CharField(max_length=100)
-    
-    status=models.CharField(max_length=100)
-    
-    tracking_time=models.DateField(auto_now_add=True)
-    
-    
+
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name="tracking"
+    )
+
+    place = models.CharField(max_length=100)
+
+    status = models.CharField(max_length=100)
+
+    tracking_time = models.DateTimeField(auto_now_add=True)
+
+
+    def save(self, *args, **kwargs):
+
+        # Save the tracking record first
+        super().save(*args, **kwargs)
+
+        # Update the main Order status
+        self.order.status = self.status
+
+        # Save the updated Order in database
+        self.order.save(update_fields=["status"])
+
+
     def __str__(self):
-        return f"order #{self.order.id}-{self.status}"    
+
+        return f"Order #{self.order.id} - {self.status}"

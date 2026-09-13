@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-    <title>My Cart</title>
+    <title>My Cart - RvStore</title>
 
     <style>
 
@@ -17,6 +18,8 @@
             background: #f5f6f8;
             color: #222;
         }
+
+        /* NAVBAR */
 
         .navbar {
             background: #111827;
@@ -41,6 +44,8 @@
             color: #60a5fa;
         }
 
+        /* CONTAINER */
+
         .container {
             width: 85%;
             max-width: 1100px;
@@ -51,11 +56,15 @@
             margin-bottom: 25px;
         }
 
+        /* CART LAYOUT */
+
         .cart-layout {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 25px;
         }
+
+        /* CART ITEMS */
 
         .cart-items {
             background: white;
@@ -167,29 +176,47 @@
             color: #111;
         }
 
-        .checkout-btn {
+        /* CONTINUE SHOPPING */
+
+        .continue-btn {
+            display: block;
             width: 100%;
-            padding: 14px;
+            text-align: center;
             margin-top: 20px;
-            background: #2563eb;
-            color: white;
-            border: none;
+            padding: 13px;
+            text-decoration: none;
+            color: #333;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
+            font-weight: bold;
         }
 
-        .checkout-btn:hover {
+        .continue-btn:hover {
+            background: #e5e5e5;
+        }
+
+        /* PROCEED BUTTON */
+
+        .proceed-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 12px;
+            padding: 14px;
+            text-decoration: none;
+            color: white;
+            background: #2563eb;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .proceed-btn:hover {
             background: #1d4ed8;
         }
 
-        .continue-btn {
-            display: inline-block;
-            margin-top: 25px;
-            text-decoration: none;
-            color: #2563eb;
-            font-weight: bold;
-        }
+        /* EMPTY CART */
 
         .empty-cart {
             background: white;
@@ -202,6 +229,8 @@
         .empty-cart h2 {
             margin-bottom: 20px;
         }
+
+        /* MOBILE */
 
         @media (max-width: 768px) {
 
@@ -223,6 +252,11 @@
                 height: 200px;
             }
 
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
         }
 
     </style>
@@ -233,9 +267,15 @@
 <body>
 
 
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <div class="navbar">
 
-    <h2>MyShop</h2>
+    <h2>
+        RvStore
+    </h2>
 
     <div>
 
@@ -247,38 +287,66 @@
             🛒 Cart ({{ cart_count }})
         </a>
 
+        <a href="{% url 'my_orders' %}">
+            My Orders
+        </a>
+
     </div>
 
 </div>
 
 
+<!-- =========================
+     MAIN CONTAINER
+========================= -->
+
 <div class="container">
 
-    <h1>Shopping Cart 🛒</h1>
+    <h1>
+        Shopping Cart 🛒
+    </h1>
 
 
     {% if products %}
 
+
     <div class="cart-layout">
 
+
+        <!-- =========================
+             CART PRODUCTS
+        ========================== -->
 
         <div class="cart-items">
 
 
             {% for item in products %}
 
+
             <div class="cart-item">
 
 
-                <img src="{{ item.product.image.url }}"
-                     alt="{{ item.product.product_name }}">
+                <!-- PRODUCT IMAGE -->
 
+                {% if item.product.image %}
+
+                    <img
+                        src="{{ item.product.image.url }}"
+                        alt="{{ item.product.product_name }}"
+                    >
+
+                {% endif %}
+
+
+                <!-- PRODUCT INFORMATION -->
 
                 <div class="product-info">
+
 
                     <h2>
                         {{ item.product.product_name }}
                     </h2>
+
 
                     <p class="price">
                         Price: ₹{{ item.product.price }}
@@ -289,29 +357,40 @@
 
                     <div class="quantity">
 
+
                         <a href="{% url 'decrease_cart' item.product.id %}">
                             −
                         </a>
+
 
                         <span>
                             {{ item.quantity }}
                         </span>
 
+
                         <a href="{% url 'increase_cart' item.product.id %}">
                             +
                         </a>
 
+
                     </div>
 
 
+                    <!-- SUBTOTAL -->
+
                     <p class="subtotal">
-                        Subtotal: ₹{{ item.subtotal }}
+
+                        Subtotal:
+                        ₹{{ item.subtotal }}
+
                     </p>
+
 
                 </div>
 
 
             </div>
+
 
             {% endfor %}
 
@@ -319,14 +398,24 @@
         </div>
 
 
+
+        <!-- =========================
+             ORDER SUMMARY
+        ========================== -->
+
         <div class="summary">
 
-            <h2>Order Summary</h2>
+
+            <h2>
+                Order Summary
+            </h2>
 
 
             <div class="summary-row">
 
-                <span>Subtotal</span>
+                <span>
+                    Subtotal
+                </span>
 
                 <span>
                     ₹{{ total }}
@@ -337,7 +426,9 @@
 
             <div class="summary-row">
 
-                <span>Delivery</span>
+                <span>
+                    Delivery
+                </span>
 
                 <span>
                     Free
@@ -348,7 +439,9 @@
 
             <div class="summary-row total">
 
-                <span>Total</span>
+                <span>
+                    Total
+                </span>
 
                 <span>
                     ₹{{ total }}
@@ -357,24 +450,29 @@
             </div>
 
 
-            <button>
+            <!-- CONTINUE SHOPPING -->
 
-                <a href="{% url 'dashboard' %}"
-               class="continue-btn">
+            <a
+                href="{% url 'dashboard' %}"
+                class="continue-btn"
+            >
 
                 ← Continue Shopping
 
             </a>
-               
-            </button>
 
 
-            <a href="{% url 'checkout' %}"
-               class="continue-btn">
+            <!-- PROCEED TO CHECKOUT -->
 
-                proceed
+            <a
+                href="{% url 'checkout' %}"
+                class="proceed-btn"
+            >
+
+                Proceed to Checkout →
 
             </a>
+
 
         </div>
 
@@ -384,6 +482,10 @@
 
     {% else %}
 
+
+    <!-- =========================
+         EMPTY CART
+    ========================== -->
 
     <div class="empty-cart">
 
@@ -395,8 +497,11 @@
             You haven't added any products yet.
         </p>
 
-        <a href="{% url 'dashboard' %}"
-           class="continue-btn">
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="continue-btn"
+        >
 
             Start Shopping →
 
@@ -412,4 +517,5 @@
 
 
 </body>
+
 </html>

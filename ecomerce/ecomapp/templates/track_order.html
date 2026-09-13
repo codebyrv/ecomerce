@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -12,6 +12,10 @@
 
 
     <style>
+
+        /* =========================
+           BASIC RESET
+        ========================= */
 
         * {
             box-sizing: border-box;
@@ -27,10 +31,15 @@
         }
 
 
+        /* =========================
+           NAVBAR
+        ========================= */
+
         .navbar {
             background: white;
             border-bottom: 1px solid #ddd;
             padding: 18px 7%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,14 +49,25 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
+            color: #111827;
         }
 
 
         .navbar a {
             text-decoration: none;
             color: #333;
+            font-weight: 500;
         }
 
+
+        .navbar a:hover {
+            color: #2563eb;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
 
         .container {
             width: 90%;
@@ -56,6 +76,10 @@
         }
 
 
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
         .page-header {
             margin-bottom: 25px;
         }
@@ -63,11 +87,14 @@
 
         .page-header h1 {
             margin-bottom: 8px;
+            font-size: 30px;
+            color: #111827;
         }
 
 
         .page-header p {
             color: #777;
+            font-size: 15px;
         }
 
 
@@ -79,21 +106,28 @@
             background: white;
             border: 1px solid #ddd;
             border-radius: 10px;
+
             padding: 25px;
             margin-bottom: 30px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
         }
 
 
         .current-status h3 {
             color: #777;
-            font-size: 14px;
+            font-size: 13px;
+
             margin-bottom: 8px;
+
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
 
         .current-status h2 {
             font-size: 24px;
+            color: #2563eb;
         }
 
 
@@ -105,76 +139,97 @@
             background: white;
             border: 1px solid #ddd;
             border-radius: 10px;
+
             padding: 30px;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
         }
 
 
         .tracking-card h2 {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+
+            font-size: 22px;
+            color: #111827;
         }
 
 
         /* =========================
-           TIMELINE
+           TRACKING ITEM
         ========================= */
 
-        .timeline {
-            position: relative;
+        .tracking-item {
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            padding: 18px;
+
+            margin-bottom: 15px;
+
+            background: #fafafa;
         }
 
 
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 13px;
-            top: 5px;
-            bottom: 5px;
-            width: 2px;
-            background: #ddd;
-        }
-
-
-        .timeline-item {
-            position: relative;
-            padding-left: 50px;
-            margin-bottom: 35px;
-        }
-
-
-        .timeline-item:last-child {
+        .tracking-item:last-child {
             margin-bottom: 0;
         }
 
 
-        .timeline-dot {
-            position: absolute;
-            left: 5px;
-            top: 3px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #111;
-            border: 4px solid white;
-            box-shadow: 0 0 0 1px #111;
-        }
+        /* =========================
+           STATUS
+        ========================= */
 
+        .tracking-status {
 
-        .timeline-status {
             font-size: 18px;
+
             font-weight: bold;
-            margin-bottom: 8px;
+
+            margin-bottom: 10px;
+
+            color: #111827;
         }
 
 
-        .timeline-place {
+        /* =========================
+           PLACE
+        ========================= */
+
+        .tracking-place {
+
             color: #555;
-            margin-bottom: 6px;
+
+            margin-bottom: 7px;
+
+            font-size: 15px;
         }
 
 
-        .timeline-time {
+        /* =========================
+           TIME
+        ========================= */
+
+        .tracking-time {
+
             color: #888;
+
             font-size: 13px;
+        }
+
+
+        /* =========================
+           EMPTY TRACKING
+        ========================= */
+
+        .empty {
+
+            color: #777;
+
+            padding: 20px 0;
+
+            font-size: 15px;
         }
 
 
@@ -183,36 +238,89 @@
         ========================= */
 
         .back-btn {
+
             display: inline-block;
-            margin-top: 25px;
+
+            margin-top: 30px;
+
             text-decoration: none;
+
             color: #333;
+
             border: 1px solid #ccc;
+
             padding: 11px 18px;
+
             border-radius: 6px;
+
             background: white;
+
+            transition: 0.2s;
         }
 
 
         .back-btn:hover {
+
             background: #f1f1f1;
+
+            border-color: #aaa;
         }
 
 
         /* =========================
-           EMPTY
+           MOBILE
         ========================= */
-
-        .empty {
-            color: #777;
-            padding: 20px 0;
-        }
-
 
         @media (max-width: 600px) {
 
+            .navbar {
+                padding: 16px 5%;
+            }
+
+
+            .logo {
+                font-size: 21px;
+            }
+
+
+            .container {
+                width: 92%;
+                margin: 25px auto;
+            }
+
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+
+            .current-status {
+                padding: 20px;
+            }
+
+
+            .current-status h2 {
+                font-size: 21px;
+            }
+
+
             .tracking-card {
                 padding: 20px;
+            }
+
+
+            .tracking-card h2 {
+                font-size: 20px;
+            }
+
+
+            .tracking-status {
+                font-size: 16px;
+            }
+
+
+            .tracking-place {
+                font-size: 14px;
             }
 
         }
@@ -225,66 +333,98 @@
 <body>
 
 
-    <!-- NAVBAR -->
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
     <nav class="navbar">
 
         <div class="logo">
+
             RvStore
+
         </div>
 
 
         <a href="{% url 'my_orders' %}">
+
             My Orders
+
         </a>
 
     </nav>
 
 
 
+    <!-- =========================
+         MAIN CONTAINER
+    ========================= -->
+
     <div class="container">
 
 
-        <!-- PAGE HEADER -->
+        <!-- =========================
+             PAGE HEADER
+        ========================= -->
 
         <div class="page-header">
 
             <h1>
+
                 Track Order #{{ order.id }}
+
             </h1>
 
+
             <p>
+
                 Follow the progress of your delivery.
+
             </p>
 
         </div>
 
 
 
-        <!-- CURRENT STATUS -->
+        <!-- =========================
+             CURRENT STATUS
+        ========================= -->
 
         <div class="current-status">
 
             <h3>
+
                 Current Status
+
             </h3>
 
 
+            <!--
+                This gets the current status
+                from the Order table in database.
+            -->
+
             <h2>
+
                 {{ order.status }}
+
             </h2>
 
         </div>
 
 
 
-        <!-- TRACKING -->
+        <!-- =========================
+             TRACKING CARD
+        ========================= -->
 
         <div class="tracking-card">
 
 
             <h2>
-                Tracking History
+
+               latest status
+
             </h2>
 
 
@@ -292,51 +432,57 @@
             {% if tracking %}
 
 
-                <div class="timeline">
+                <!-- =========================
+                     TRACKING HISTORY
+                ========================= -->
+
+                {% for item in tracking %}
 
 
-                    {% for item in tracking %}
+                    <div class="tracking-item">
 
 
-                        <div class="timeline-item">
+                        <!-- STATUS -->
 
+                        <div class="tracking-status">
 
-                            <div class="timeline-dot">
-                            </div>
-
-
-                            <div class="timeline-status">
-
-                                {{ item.status }}
-
-                            </div>
-
-
-                            <div class="timeline-place">
-
-                                📍 {{ item.place }}
-
-                            </div>
-
-
-                            <div class="timeline-time">
-
-                                🕒 {{ item.tracking_time }}
-
-                            </div>
-
+                            {{ item.status }}
 
                         </div>
 
 
-                    {% endfor %}
+
+                        <!-- PLACE -->
+
+                        <div class="tracking-place">
+
+                            📍 {{ item.place }}
+
+                        </div>
 
 
-                </div>
+
+                        <!-- DATE AND TIME -->
+
+                        <div class="tracking-time">
+
+                            🕒 {{ item.tracking_time|date:"M. d, Y, g:i a" }}
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
 
 
             {% else %}
 
+
+                <!-- =========================
+                     NO TRACKING
+                ========================= -->
 
                 <p class="empty">
 
@@ -348,6 +494,10 @@
             {% endif %}
 
 
+
+            <!-- =========================
+                 BACK BUTTON
+            ========================= -->
 
             <a
                 href="{% url 'my_orders' %}"
@@ -368,3 +518,5 @@
 </body>
 
 </html>
+
+
