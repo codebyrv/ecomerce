@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - RvStore</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+
+        .page-header p {
+            color: #777;
+        }
+
+
+        .order-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+
+        .order-header {
+            background: #fafafa;
+            border-bottom: 1px solid #ddd;
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .order-id {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        .order-date {
+            color: #777;
+            font-size: 14px;
+        }
+
+
+        .order-body {
+            padding: 22px;
+        }
+
+
+        .order-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+
+        .detail h4 {
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+
+        .detail p {
+            font-weight: bold;
+        }
+
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #eef3ff;
+            color: #3155a6;
+            font-size: 13px;
+        }
+
+
+        .order-footer {
+            padding: 16px 22px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .amount {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+
+        .track-btn {
+            text-decoration: none;
+            background: #111;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        .track-btn:hover {
+            background: #333;
+        }
+
+
+        .empty {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 50px;
+            text-align: center;
+        }
+
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+
+        .empty p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+
+        .shop-btn {
+            display: inline-block;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+        }
+
+
+        @media (max-width: 700px) {
+
+            .order-details {
+                grid-template-columns: 1fr;
+            }
+
+
+            .order-header,
+            .order-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+            RvStore
+        </div>
+
+
+        <a href="{% url 'cart' %}">
+            Cart
+        </a>
+
+    </nav>
+
+
+
+    <div class="container">
+
+
+        <div class="page-header">
+
+            <h1>
+                My Orders
+            </h1>
+
+            <p>
+                View your orders and track your deliveries.
+            </p>
+
+        </div>
+
+
+
+        {% for order in orders %}
+
+
+            <div class="order-card">
+
+
+                <div class="order-header">
+
+
+                    <div class="order-id">
+
+                        Order #{{ order.id }}
+
+                    </div>
+
+
+                    <div class="order-date">
+
+                        {{ order.created_at }}
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="order-body">
+
+
+                    <div class="order-details">
+
+
+                        <div class="detail">
+
+                            <h4>
+                                Payment
+                            </h4>
+
+                            <p>
+                                {{ order.payment_status }}
+                            </p>
+
+                        </div>
+
+
+
+                        <div class="detail">
+
+                            <h4>
+                                Status
+                            </h4>
+
+                            <span class="status">
+
+                                {{ order.status }}
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div class="detail">
+
+                            <h4>
+                                Delivery City
+                            </h4>
+
+                            <p>
+                                {{ order.city }}
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="order-footer">
+
+
+                    <div class="amount">
+
+                        Total:
+                        ₹{{ order.total_amount }}
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'track_order' order.id %}"
+                        class="track-btn"
+                    >
+
+                        Track Order →
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        {% empty %}
+
+
+            <div class="empty">
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p>
+                    You haven't placed any orders.
+                </p>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="shop-btn"
+                >
+
+                    Start Shopping
+
+                </a>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</body>
+
+</html>

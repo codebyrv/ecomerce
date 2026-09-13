@@ -50,4 +50,26 @@ urlpatterns = [
         CheckoutView.as_view(),
         name='checkout'
     ),
+     
+     path(
+        "order-success/<int:order_id>/",
+        OrderSuccessView.as_view(),
+        name="order_success"
+    ),
+
+
+    # User's orders
+    path(
+        "my-orders/",
+        MyOrdersView.as_view(),
+        name="my_orders"
+    ),
+
+
+    # Track particular order
+    path(
+        "track-order/<int:order_id>/",
+        TrackOrderView.as_view(),
+        name="track_order"
+    ),
 ]

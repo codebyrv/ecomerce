@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order Successful - RvStore</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            padding: 18px 7%;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .container {
+            width: 90%;
+            max-width: 750px;
+            margin: 60px auto;
+        }
+
+
+        .success-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #e8f7ed;
+            color: #1a8f45;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+
+        .success-text {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+
+        .order-info {
+            text-align: left;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .label {
+            color: #777;
+        }
+
+
+        .value {
+            font-weight: bold;
+        }
+
+
+        .products {
+            text-align: left;
+            margin-top: 25px;
+        }
+
+
+        .products h3 {
+            margin-bottom: 15px;
+        }
+
+
+        .product {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+
+        .btn {
+            flex: 1;
+            padding: 13px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+        .primary {
+            background: #111;
+            color: white;
+        }
+
+
+        .secondary {
+            border: 1px solid #ccc;
+            color: #222;
+        }
+
+
+        @media (max-width: 600px) {
+
+            .success-card {
+                padding: 25px;
+            }
+
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+            RvStore
+        </div>
+
+    </nav>
+
+
+
+    <div class="container">
+
+
+        <div class="success-card">
+
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <h1>
+                Payment Successful!
+            </h1>
+
+
+            <p class="success-text">
+
+                Your order has been placed successfully.
+
+            </p>
+
+
+
+            <div class="order-info">
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Order ID
+                    </span>
+
+                    <span class="value">
+                        #{{ order.id }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Total Amount
+                    </span>
+
+                    <span class="value">
+                        ₹{{ order.total_amount }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Payment
+                    </span>
+
+                    <span class="value">
+                        {{ order.payment_status }}
+                    </span>
+
+                </div>
+
+
+
+                <div class="info-row">
+
+                    <span class="label">
+                        Status
+                    </span>
+
+                    <span class="value">
+                        {{ order.status }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="products">
+
+                <h3>
+                    Ordered Products
+                </h3>
+
+
+                {% for item in order.items.all %}
+
+                    <div class="product">
+
+                        <span>
+
+                            {{ item.product.product_name }}
+
+                            × {{ item.quantity }}
+
+                        </span>
+
+
+                        <strong>
+
+                            ₹{{ item.price }}
+
+                        </strong>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'my_orders' %}"
+                    class="btn primary"
+                >
+
+                    View My Orders
+
+                </a>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="btn secondary"
+                >
+
+                    Continue Shopping
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

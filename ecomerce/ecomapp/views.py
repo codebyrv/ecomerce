@@ -206,38 +206,381 @@ class DecreaseCartView(LoginRequiredMixin, View):
     
     
     
-class CheckoutView(LoginRequiredMixin,View):
-    
-    def get(self,request):
-        
-        cart=request.session.get('cart',{})
-        
-        cart_items=[]
-        
-        total=0 
-        
-        for product_id,quantity in cart.items():
-            
-            product=Product.objects.get(id=product_id)
-            
-            
-            item_total=product.price*quantity
-            
+# views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+
+from django.views import View
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.contrib import messages
+
+from django.db import transaction
+
+from .models import Product
+from .models import Order
+from .models import Orderitem
+from .models import OrderTracking
+
+
+# =========================================================
+# CHECKOUT VIEW
+# =========================================================
+
+class CheckoutView(LoginRequiredMixin, View):
+
+    # -----------------------------------------------------
+    # GET METHOD
+    # -----------------------------------------------------
+
+    def get(self, request):
+
+        # Get cart from session
+        cart = request.session.get(
+            "cart",
+            {}
+        )
+
+        # List to store cart products
+        cart_items = []
+
+        # Total price
+        total = 0
+
+
+        # Loop through cart
+        for product_id, quantity in cart.items():
+
+            # Convert quantity to integer
+            quantity = int(quantity)
+
+            # Get product from database
+            product = Product.objects.get(
+                id=product_id
+            )
+
+            # Calculate product total
+            item_total = (
+                product.price * quantity
+            )
+
+            # Add product information
             cart_items.append({
-                
-                'product':product,
-                'quantity':quantity,
-                'item_total':item_total
-                
-            })    
-            
-            
-            total=total+item_total
-            
-            return render(request,'checkout.html',{
-                
-                
-                'cart_items':cart_items,
-                'total':total
-                
+
+                "product": product,
+
+                "quantity": quantity,
+
+                "item_total": item_total
             })
+
+            # Add to total
+            total = total + item_total
+
+
+        # Send data to checkout.html
+        return render(
+            request,
+            "checkout.html",
+            {
+                "cart_items": cart_items,
+
+                "total": total
+            }
+        )
+
+
+    # -----------------------------------------------------
+    # POST METHOD
+    # -----------------------------------------------------
+
+    def post(self, request):
+
+        # Get checkout details
+        full_name = request.POST.get(
+            "full_name"
+        )
+
+        email = request.POST.get(
+            "email"
+        )
+
+        phone = request.POST.get(
+            "phone"
+        )
+
+        address = request.POST.get(
+            "address"
+        )
+
+        city = request.POST.get(
+            "city"
+        )
+
+        state = request.POST.get(
+            "state"
+        )
+
+        pincode = request.POST.get(
+            "pincode"
+        )
+
+
+        # Get cart from session
+        cart = request.session.get(
+            "cart",
+            {}
+        )
+
+
+        # -------------------------------------------------
+        # CHECK EMPTY CART
+        # -------------------------------------------------
+
+        if not cart:
+
+            # Show error message
+            messages.error(
+                request,
+                "Your cart is empty."
+            )
+
+            # Return to cart
+            return redirect("cart")
+
+
+        # -------------------------------------------------
+        # CHECK STOCK
+        # -------------------------------------------------
+
+        products = []
+
+        total_amount = 0
+
+
+        # Loop through cart
+        for product_id, quantity in cart.items():
+
+            # Convert quantity to integer
+            quantity = int(quantity)
+
+            # Get product
+            product = get_object_or_404(
+                Product,
+                id=product_id
+            )
+
+
+            # Check stock
+            if quantity > product.stock:
+
+                # Show stock error
+                messages.error(
+                    request,
+                    f"{product.product_name} has only "
+                    f"{product.stock} items available."
+                )
+
+                # Don't create order
+                return redirect("cart")
+
+
+            # Store product and quantity
+            products.append(
+                (product, quantity)
+            )
+
+
+            # Calculate item total
+            item_total = (
+                product.price * quantity
+            )
+
+            # Add item total
+            total_amount = (
+                total_amount + item_total
+            )
+
+
+        # -------------------------------------------------
+        # CREATE ORDER
+        # -------------------------------------------------
+
+        # Make database operation safe
+        with transaction.atomic():
+
+            # Create Order
+            order = Order.objects.create(
+
+                user=request.user,
+
+                full_name=full_name,
+
+                email=email,
+
+                phone=phone,
+
+                address=address,
+
+                city=city,
+
+                state=state,
+
+                pincode=pincode,
+
+                total_amount=total_amount,
+
+                payment_status="Success",
+
+                status="Order Placed"
+            )
+
+
+            # -------------------------------------------------
+            # CREATE ORDER ITEMS
+            # -------------------------------------------------
+
+            for product, quantity in products:
+
+                # Save purchased product
+                Orderitem.objects.create(
+
+                    order=order,
+
+                    product=product,
+
+                    quantity=quantity,
+
+                    price=product.price
+                )
+
+
+                # -------------------------------------------------
+                # REDUCE STOCK
+                # -------------------------------------------------
+
+                product.stock = (
+                    product.stock - quantity
+                )
+
+                product.save(
+                    update_fields=["stock"]
+                )
+
+
+            # -------------------------------------------------
+            # CREATE FIRST TRACKING
+            # -------------------------------------------------
+
+            OrderTracking.objects.create(
+
+                order=order,
+
+                place="Order Processing",
+
+                status="Order Placed"
+            )
+
+
+        # -------------------------------------------------
+        # CLEAR CART
+        # -------------------------------------------------
+
+        request.session["cart"] = {}
+
+        request.session.modified = True
+
+
+        # -------------------------------------------------
+        # REDIRECT TO SUCCESS PAGE
+        # -------------------------------------------------
+
+        return redirect(
+            "order_success",
+            order_id=order.id
+        )
+
+
+# =========================================================
+# ORDER SUCCESS VIEW
+# =========================================================
+
+class OrderSuccessView(LoginRequiredMixin, View):
+
+    def get(self, request, order_id):
+
+        # Get user's order
+        order = get_object_or_404(
+            Order,
+            id=order_id,
+            user=request.user
+        )
+
+        # Show success page
+        return render(
+            request,
+            "order_success.html",
+            {
+                "order": order
+            }
+        )
+
+
+# =========================================================
+# MY ORDERS VIEW
+# =========================================================
+
+class MyOrdersView(LoginRequiredMixin, View):
+
+    def get(self, request):
+
+        # Get current user's orders
+        orders = Order.objects.filter(
+            user=request.user
+        ).order_by(
+            "-created_at"
+        )
+
+        # Show orders
+        return render(
+            request,
+            "my_orders.html",
+            {
+                "orders": orders
+            }
+        )
+
+
+# =========================================================
+# TRACK ORDER VIEW
+# =========================================================
+
+class TrackOrderView(LoginRequiredMixin, View):
+
+    def get(self, request, order_id):
+
+        # Get only current user's order
+        order = get_object_or_404(
+            Order,
+            id=order_id,
+            user=request.user
+        )
+
+
+        # Get tracking history
+        tracking = order.tracking.all().order_by(
+            "tracking_time"
+        )
+
+
+        # Show tracking page
+        return render(
+            request,
+            "track_order.html",
+            {
+                "order": order,
+
+                "tracking": tracking
+            }
+        )

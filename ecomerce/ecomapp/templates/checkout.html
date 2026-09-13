@@ -1,72 +1,170 @@
-```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Checkout - RvStore</title>
+
 
     <style>
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
+
 
         body {
-            background: #f5f5f5;
-            color: #333;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            padding: 20px 8%;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .header h2 {
+            font-family: Arial, sans-serif;
+            background: #f5f6f8;
             color: #222;
         }
 
-        /* Main container */
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #ddd;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111;
+        }
+
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
         .container {
-            width: 85%;
+            width: 90%;
             max-width: 1100px;
             margin: 40px auto;
         }
 
-        .checkout-title {
+
+        .page-title {
             margin-bottom: 25px;
         }
 
-        .checkout-title h1 {
-            font-size: 28px;
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
         }
 
-        /* Checkout layout */
-        .checkout {
+
+        .page-title p {
+            color: #777;
+        }
+
+
+        /* =========================
+           CHECKOUT GRID
+        ========================= */
+
+        .checkout-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
+            gap: 25px;
         }
 
-        /* Box */
-        .box {
-            background: white;
+
+        .card {
+            background: #ffffff;
+            border-radius: 10px;
             padding: 25px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #e1e1e1;
         }
 
-        .box h2 {
-            margin-bottom: 20px;
+
+        .card h2 {
             font-size: 20px;
+            margin-bottom: 20px;
         }
 
-        /* Cart item */
-        .item {
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #007bff;
+        }
+
+
+        .form-group textarea {
+            height: 90px;
+            resize: vertical;
+        }
+
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+
+        /* =========================
+           ORDER ITEMS
+        ========================= */
+
+        .order-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -74,86 +172,113 @@
             border-bottom: 1px solid #eee;
         }
 
-        .item:last-child {
-            border-bottom: none;
-        }
 
-        .item-name {
+        .product-name {
             font-weight: bold;
         }
 
-        .item-details {
+
+        .quantity {
             color: #777;
-            margin-top: 5px;
             font-size: 14px;
+            margin-top: 5px;
         }
+
 
         .item-price {
             font-weight: bold;
         }
 
-        /* Total */
-        .total {
+
+        /* =========================
+           TOTAL
+        ========================= */
+
+        .total-row {
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
-            padding-top: 20px;
+            padding-top: 18px;
             border-top: 2px solid #eee;
-            font-size: 20px;
+        }
+
+
+        .total-row span:first-child {
+            font-size: 18px;
             font-weight: bold;
         }
 
-        /* Address form */
-        .form-group {
-            margin-bottom: 18px;
-        }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 7px;
+        .total-price {
+            font-size: 22px;
             font-weight: bold;
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 15px;
-        }
 
-        .form-group textarea {
-            height: 90px;
-            resize: none;
-        }
+        /* =========================
+           BUTTON
+        ========================= */
 
-        /* Place order button */
-        .order-btn {
+        .place-order-btn {
             width: 100%;
+            margin-top: 25px;
             padding: 14px;
-            margin-top: 20px;
-            background: #222;
-            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 7px;
+            background: #111;
+            color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .order-btn:hover {
-            background: #444;
+
+        .place-order-btn:hover {
+            background: #333;
         }
 
-        /* Mobile */
-        @media (max-width: 768px) {
 
-            .checkout {
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+
+        .message {
+            background: #ffe5e5;
+            color: #b00020;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            .checkout-grid {
                 grid-template-columns: 1fr;
             }
 
-            .container {
-                width: 92%;
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+
+            .navbar {
+                padding: 15px 5%;
+            }
+
+
+            .nav-links a {
+                margin-left: 10px;
             }
 
         }
@@ -162,153 +287,299 @@
 
 </head>
 
+
 <body>
 
 
-    <!-- Header -->
-    <div class="header">
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-        <h2>RvStore</h2>
+    <nav class="navbar">
 
-    </div>
+        <div class="logo">
+            RvStore
+        </div>
 
 
-    <!-- Main content -->
+        <div class="nav-links">
+
+            <a href="{% url 'cart' %}">
+                Cart
+            </a>
+
+            <a href="{% url 'my_orders' %}">
+                My Orders
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
     <div class="container">
 
 
-        <!-- Page title -->
-        <div class="checkout-title">
+        <div class="page-title">
 
-            <h1>Checkout</h1>
+            <h1>
+                Checkout
+            </h1>
+
+            <p>
+                Enter your delivery details and place your order.
+            </p>
 
         </div>
 
 
-        <div class="checkout">
+
+        <!-- Django messages -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
 
 
-            <!-- LEFT SIDE -->
-            <div class="box">
 
-                <h2>Delivery Details</h2>
+        <div class="checkout-grid">
 
 
-                <div class="form-group">
+            <!-- =====================
+                 CUSTOMER DETAILS
+            ====================== -->
 
-                    <label>Full Name</label>
+            <div class="card">
 
-                    <input
-                        type="text"
-                        placeholder="Enter your full name"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>Phone Number</label>
-
-                    <input
-                        type="text"
-                        placeholder="Enter your phone number"
-                    >
-
-                </div>
+                <h2>
+                    Delivery Information
+                </h2>
 
 
-                <div class="form-group">
+                <form method="POST">
 
-                    <label>Address</label>
-
-                    <textarea
-                        placeholder="Enter your delivery address"
-                    ></textarea>
-
-                </div>
+                    {% csrf_token %}
 
 
-                <div class="form-group">
+                    <div class="form-group">
 
-                    <label>City</label>
+                        <label>
+                            Full Name
+                        </label>
 
-                    <input
-                        type="text"
-                        placeholder="Enter your city"
-                    >
+                        <input
+                            type="text"
+                            name="full_name"
+                            placeholder="Enter your full name"
+                            required
+                        >
 
-                </div>
+                    </div>
 
 
-                <div class="form-group">
 
-                    <label>PIN Code</label>
+                    <div class="form-group">
 
-                    <input
-                        type="text"
-                        placeholder="Enter PIN code"
-                    >
+                        <label>
+                            Email
+                        </label>
 
-                </div>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            placeholder="House number, street, area..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <div class="two-column">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                name="city"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label>
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                name="state"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Pincode
+                        </label>
+
+                        <input
+                            type="text"
+                            name="pincode"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
 
             </div>
 
 
-            <!-- RIGHT SIDE -->
-            <div class="box">
 
-                <h2>Order Summary</h2>
+            <!-- =====================
+                 ORDER SUMMARY
+            ====================== -->
+
+            <div class="card">
+
+                <h2>
+                    Order Summary
+                </h2>
 
 
-                <!-- Loop through cart items -->
                 {% for item in cart_items %}
 
-                    <div class="item">
+                    <div class="order-item">
+
 
                         <div>
 
-                            <!-- Product name -->
-                            <div class="item-name">
+                            <div class="product-name">
+
                                 {{ item.product.product_name }}
+
                             </div>
 
-                            <!-- Quantity -->
-                            <div class="item-details">
-                                Qty: {{ item.quantity }}
+
+                            <div class="quantity">
+
+                                Quantity:
+                                {{ item.quantity }}
+
                             </div>
 
                         </div>
 
 
-                        <!-- Product total -->
                         <div class="item-price">
 
                             ₹{{ item.item_total }}
 
                         </div>
 
+
                     </div>
 
                 {% endfor %}
 
 
-                <!-- Final total -->
-                <div class="total">
 
-                    <span>Total</span>
+                <div class="total-row">
 
-                    <span>₹{{ total }}</span>
+                    <span>
+                        Total
+                    </span>
+
+
+                    <span class="total-price">
+
+                        ₹{{ total }}
+
+                    </span>
 
                 </div>
 
 
-                <!-- Place order -->
-                <button class="order-btn">
 
-                    Place Order
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                >
+
+                    Pay & Place Order
 
                 </button>
+
+
+                </form>
 
             </div>
 
@@ -317,6 +588,7 @@
 
     </div>
 
+
 </body>
+
 </html>
-```
